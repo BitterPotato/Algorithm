@@ -28,14 +28,14 @@ public class InsertSort  implements OrdinarySort{
 //            }// end 2nd for
 //            insertEndToBegin(sequ, sortedCurIndex, sortedEndIndex);
 
-            // TODO some errors
             T sortedEndValue = sequ[sortedEndIndex];
             int sortedCurIndex = sortedEndIndex;
-            while(--sortedCurIndex > 0
+            while(--sortedCurIndex >= 0
                     && sequ[sortedCurIndex].compareTo(sortedEndValue) > 0) {
                     sequ[sortedCurIndex + 1] = sequ[sortedCurIndex];
             }
-            sequ[sortedCurIndex] = sortedEndValue;
+            // +1¿¼ÂÇÁÙ½çÖµ
+            sequ[sortedCurIndex + 1] = sortedEndValue;
         }// end 1st for
     }
 

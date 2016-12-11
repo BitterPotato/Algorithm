@@ -26,13 +26,13 @@ public class QuickSort {
 
         // 数组个数为0或1，已排序（终止条件）
         // Notice: 栽在小学算数，忘记+1
-//        int size = right - left + 1;
-        int size = right - left;
+        int size = right - left + 1;
         if (size < 2) {
             return;
         }
 
         // 数组个数过少，采用插入排序
+
 
         // 三数排序决定基准，left/right/中位
         int middle = (left + right) / 2;
@@ -45,7 +45,7 @@ public class QuickSort {
         if (sequ[middle].compareTo(sequ[right]) > 0) {
             swap(sequ, middle, right);
         }
-        // 数组仅有3个元素，此时已经排好序
+        // 数组仅有2个或3个元素，此时已经排好序
         // （若对小数组使用插入排序，则该语句没有必要）
         if (middle == right - 1) {
             return;

@@ -8,29 +8,13 @@ import java.util.Random;
  */
 public class MainEntry {
     public static void main(String[] argc) {
-        int sequLength = 25;
-        int range = 15;
+        int sequLength = 10;
+        int range = 10;
         Integer[] sequ = buildIntegerSequ(sequLength, range);
 
-        System.out.println("Before:");
-        for (int i = 0; i < sequ.length; i++) {
-            System.out.print(sequ[i] + " ");
-        }
-
-//        QuickSort q = new QuickSort();
-//        q.execute(sequ, 0, sequ.length - 1);
-//        ChooseSort c = new ChooseSort();
-//        c.execute(sequ);
-//        BubbleSort b = new BubbleSort();
-//        b.execute(sequ);
-        InsertSort in = new InsertSort();
-        in.execute(sequ);
-
-        System.out.println("");
-        System.out.println("After:");
-        for (int i = 0; i < sequ.length; i++) {
-            System.out.print(sequ[i] + " ");
-        }
+        sortByType(sequ, SortType.QuickSort);
+//        sortByType(sequ, SortType.InsertSort);
+        
     }
 
 
@@ -52,4 +36,45 @@ public class MainEntry {
 
         return sequ;
     }
+
+    private static void sortByType(Integer[] sequ, SortType sortType) {
+        Integer[] sequCopy = sequ.clone();
+
+        System.out.println("Before:");
+        for (int i = 0; i < sequCopy.length; i++) {
+            System.out.print(sequCopy[i] + " ");
+        }
+
+        long startTime = System.nanoTime();
+
+        switch(sortType){
+        case InsertSort:
+            InsertSort in = new InsertSort();
+            in.execute(sequCopy);
+        case QuickSort:
+            QuickSort q = new QuickSort();
+            q.execute(sequCopy, 0, sequCopy.length - 1);
+            break;
+        case ChooseSort:
+            ChooseSort c = new ChooseSort();
+            c.execute(sequCopy);
+            break;
+        case BubbleSort:
+          BubbleSort b = new BubbleSort();
+          b.execute(sequCopy);
+          break;
+        }
+
+        long endTime = System.nanoTime();
+
+        System.out.println("");
+        System.out.println("After:");
+        for (int i = 0; i < sequCopy.length; i++) {
+            System.out.print(sequCopy[i] + " ");
+        }
+
+        System.out.println("");
+        System.out.println("Total Time: \n" + (endTime-startTime) + " nanosecond");
+    }
+
 }
