@@ -3,13 +3,12 @@ package sort;
 import static sort.SortUtils.swap;
 
 /**
- * 快速排序 优化点： 1.基准的选择：三数中值分割 2.小数组的处理
- * 插入排序 坑： 1.勿忘递归的终止条件 2.对于相同元素的处理
+ * 快速排序
  *
  * @author Yang Weijie
  *
  */
-public class QuickSort extends AbstractQuickSort{
+public class AnotherQuickSort extends AbstractQuickSort{
 
     // main code
     /**
@@ -25,7 +24,6 @@ public class QuickSort extends AbstractQuickSort{
         super.rangeCheck(sequ.length, left, right);
 
         // 数组个数为0或1，已排序（终止条件）
-        // Notice: 栽在小学算数，忘记+1
         int size = right - left + 1;
         if (size < 2) {
             return;
@@ -67,39 +65,20 @@ public class QuickSort extends AbstractQuickSort{
         // 将基准（三数中值）放至right-1位置
         swap(sequ, middle, right - 1);
 
-        // 对left+1和right-2之间的范围进行筛选
-        // int forePoint = left + 1;
-        // int backPoint = right - 2;
-        int forePoint = left;
-        int backPoint = right - 1;
+        int curPoint = left + 1;
+        // 指向小于基准与大于等于基准的序列的分割位置，大于等于基准的序列的第一个元素
+        int parPoint = left + 1;
         T pivot = sequ[right - 1];
 
-        while (true) {
-            // Wrong Version: 当sequ[forePoint]=sequ[backPoint]=pivot时将导致无限循环
-            // for(; forePoint < backPoint; forePoint++) {
-            // if(sequ[forePoint].compareTo(pivot) >= 0) {
-            // break;
-            // }
-            // }
-            // for(; forePoint < backPoint; backPoint--) {
-            // if(sequ[backPoint].compareTo(pivot) <= 0) {
-            // break;
-            // }
-            // }
-            while (sequ[++forePoint].compareTo(pivot) < 0) {
+        while(curPoint < right - 1) {
+            if(sequ[curPoint].compareTo(pivot) < 0) {
+                swap(sequ, curPoint, parPoint);
+                parPoint++;
             }
-            while (sequ[--backPoint].compareTo(pivot) > 0) {
-            }
-
-            if (forePoint >= backPoint) {
-                // 将基准放到合适位置
-                swap(sequ, forePoint, right - 1);
-                break;
-            } else {
-                swap(sequ, forePoint, backPoint);
-            }
+            curPoint++;
         }
-        return forePoint;
+        swap(sequ, parPoint, right - 1);
+        return parPoint;
     }
 
 }

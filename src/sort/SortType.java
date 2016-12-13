@@ -4,5 +4,7 @@ public enum SortType {
     InsertSort,
     ChooseSort,
     BubbleSort,
-    QuickSort;
+    QuickSort,
+    NonRecurQuickSort,
+    AnotherQuickSort;
 }

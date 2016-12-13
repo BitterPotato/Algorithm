@@ -7,14 +7,18 @@ import java.util.Random;
  *
  */
 public class MainEntry {
+
+    private static final SortFactory sortFactory = new SortFactory();
+
     public static void main(String[] argc) {
-        int sequLength = 10;
-        int range = 10;
+        int sequLength = 50;
+        int range = 40;
         Integer[] sequ = buildIntegerSequ(sequLength, range);
 
+        sortByType(sequ, SortType.AnotherQuickSort);
+        sortByType(sequ, SortType.NonRecurQuickSort);
         sortByType(sequ, SortType.QuickSort);
-//        sortByType(sequ, SortType.InsertSort);
-        
+        sortByType(sequ, SortType.InsertSort);
     }
 
 
@@ -47,23 +51,8 @@ public class MainEntry {
 
         long startTime = System.nanoTime();
 
-        switch(sortType){
-        case InsertSort:
-            InsertSort in = new InsertSort();
-            in.execute(sequCopy);
-        case QuickSort:
-            QuickSort q = new QuickSort();
-            q.execute(sequCopy, 0, sequCopy.length - 1);
-            break;
-        case ChooseSort:
-            ChooseSort c = new ChooseSort();
-            c.execute(sequCopy);
-            break;
-        case BubbleSort:
-          BubbleSort b = new BubbleSort();
-          b.execute(sequCopy);
-          break;
-        }
+        OrdinarySort ordinarySort = sortFactory.createSort(sortType);
+        ordinarySort.execute(sequCopy);
 
         long endTime = System.nanoTime();
 

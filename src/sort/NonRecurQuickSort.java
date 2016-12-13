@@ -2,17 +2,19 @@ package sort;
 
 import static sort.SortUtils.swap;
 
+import java.util.Stack;
+
 /**
- * 快速排序 优化点： 1.基准的选择：三数中值分割 2.小数组的处理
- * 插入排序 坑： 1.勿忘递归的终止条件 2.对于相同元素的处理
+ * 非递归快速排序
  *
  * @author Yang Weijie
  *
  */
-public class QuickSort extends AbstractQuickSort{
-
+public class NonRecurQuickSort extends AbstractQuickSort{
     // main code
     /**
+    *
+    * 深度优先
     *
     * @param sequ
     * @param left
@@ -21,33 +23,53 @@ public class QuickSort extends AbstractQuickSort{
     *            数组排序段元素结束下标
     */
     protected <T extends Comparable<? super T>> void executeProcess(T[] sequ, int left, int right) {
-        // 检查下标是否越界
-        super.rangeCheck(sequ.length, left, right);
-
-        // 数组个数为0或1，已排序（终止条件）
-        // Notice: 栽在小学算数，忘记+1
-        int size = right - left + 1;
-        if (size < 2) {
-            return;
-        }
-
-        // 数组个数过少，采用插入排序
-        if(super.insertSortOptimized && size < super.insertSortOptimizedBound) {
-            new InsertSort().execute(sequ);
-            return;
-        }
+        Stack<Integer> stack = new Stack<Integer>();
 
         int partionPoint = partition(sequ, left, right);
         if(partionPoint < 0) {
             return;
         }
 
-        // 递归
-        executeProcess(sequ, left, partionPoint - 1);
-        executeProcess(sequ, partionPoint + 1, right);
+        stack.push(partionPoint + 1);
+        stack.push(right);
+
+        stack.push(left);
+        stack.push(partionPoint - 1);
+
+        while(!stack.isEmpty()) {
+            int sRight = stack.pop();
+            int sLeft = stack.pop();
+
+            partionPoint = partition(sequ, sLeft, sRight);
+            if(partionPoint < 0) {
+                continue;
+            }
+
+            stack.push(partionPoint + 1);
+            stack.push(sRight);
+
+            stack.push(sLeft);
+            stack.push(partionPoint - 1);
+        }
+
     }
 
     protected <T extends Comparable<? super T>> int partition(T[] sequ, int left, int right) {
+        // 检查下标是否越界
+        super.rangeCheck(sequ.length, left, right);
+
+        // 数组个数为0或1，已排序（终止条件）
+        int size = right - left + 1;
+        if (size < 2) {
+            return super.InvalidPoint;
+        }
+
+        // 数组个数过少，采用插入排序
+        if(super.insertSortOptimized && size < super.insertSortOptimizedBound) {
+            new InsertSort().execute(sequ);
+            return super.InvalidPoint;
+        }
+
         // 三数排序决定基准，left/right/中位
         int middle = (left + right) / 2;
         if (sequ[left].compareTo(sequ[middle]) > 0) {
