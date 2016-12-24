@@ -24,6 +24,20 @@ public class AdjacencyVertexAdapter {
     }
 
     /**
+     * the version with weight
+     * @param toVertex
+     * @param vertex
+     * @param weight
+     */
+    public void addAdjacencyVertexWithWeightTo(AdjacencyVertex toVertex, AdjacencyVertex vertex, int weight) {
+        if(toVertex != null && vertex != null) {
+            if(!toVertex.getAdjacentMapWithWeight().keySet().contains(vertex)) {
+                toVertex.getAdjacentMapWithWeight().put(vertex, weight);
+            }
+        }
+    }
+
+    /**
     * @param vertex
     * @return the decreased inDegree
     */

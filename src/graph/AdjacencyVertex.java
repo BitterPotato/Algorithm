@@ -1,6 +1,7 @@
 package graph;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * representation of graphs:
@@ -24,9 +25,11 @@ public class AdjacencyVertex {
      */
     private static final int DEFAULT_CAPACITY = 5;
     private ArrayList<AdjacencyVertex> adjacentList;
+    private HashMap<AdjacencyVertex, Integer> adjacentMapWithWeight;
 
     public AdjacencyVertex() {
         adjacentList = new ArrayList<AdjacencyVertex>(DEFAULT_CAPACITY);
+        adjacentMapWithWeight = new HashMap<AdjacencyVertex, Integer>(DEFAULT_CAPACITY);
     }
 
     public AdjacencyVertex(String desc) {
@@ -56,6 +59,14 @@ public class AdjacencyVertex {
 
     public void setAdjacentList(ArrayList<AdjacencyVertex> adjacentList) {
         this.adjacentList = adjacentList;
+    }
+
+    public HashMap<AdjacencyVertex, Integer> getAdjacentMapWithWeight() {
+        return adjacentMapWithWeight;
+    }
+
+    public void setAdjacentMapWithWeight(HashMap<AdjacencyVertex, Integer> adjacentMapWithWeight) {
+        this.adjacentMapWithWeight = adjacentMapWithWeight;
     }
 
     public String getDesc() {

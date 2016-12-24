@@ -2,8 +2,11 @@ package graph;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.Scanner;
 
+import graph.bfs.BreadthFirstSearch;
+import graph.bfs.DijkstraDfsWithArray;
 import graph.dfs.DeepFirstSearch;
 import graph.dfs.DfsSolveTopoSort;
 import graph.dfs.DfsWithAbility;
@@ -27,6 +30,9 @@ import graph.dfs.DfsWithAbility;
 public class MainEntry {
 
     public static void main(String[] argc) {
+        // 路径权值随机生成器
+        Random random = new Random(System.currentTimeMillis());
+
         Scanner scanner = new Scanner(System.in);
         // 读取所有顶点
         List<AdjacencyVertex> vertexList = new ArrayList<AdjacencyVertex>();
@@ -47,6 +53,7 @@ public class MainEntry {
             for(int index = 0; index < adjacentVertexes.length; index ++) {
                 AdjacencyVertex vertex = AdjacencyVertexUtil.findVertexWithDesc(adjacentVertexes[index], vertexList);
                 AdjacencyVertexAdapter.getInstance().addAdjacencyVertexTo(toVertex, vertex);
+                AdjacencyVertexAdapter.getInstance().addAdjacencyVertexWithWeightTo(toVertex, vertex, random.nextInt(20) + 1);
                 // 增加入度
                 AdjacencyVertexAdapter.getInstance().increaseInDegree(vertex);
             }
@@ -61,7 +68,26 @@ public class MainEntry {
 //        new ExploreMaze().execute(vertexList, "1", "7");
 
         // -------有向图检测环-------
-        DeepFirstSearch dfs = new DfsWithAbility();
-        dfs.execute(vertexList);
+//        DeepFirstSearch dfs = new DfsWithAbility();
+//        dfs.execute(vertexList);
+
+        // ------广度优先搜索--------
+//        BreadthFirstSearch bfs = new BreadthFirstSearch();
+//        bfs.printBfsResult(bfs.execute(vertexList, vertexList.get(0)));
+
+        // ------ 单源最短路径 -------
+        DijkstraDfsWithArray dbfs = new DijkstraDfsWithArray();
+        dbfs.execute(vertexList, vertexList.get(0));
+
+//        BellmanFord bf = new BellmanFord();
+//        bf.execute(vertexList, vertexList.get(0));
+//
+//        TopoSortSolveShortPath tsssp = new TopoSortSolveShortPath();
+//        tsssp.execute(vertexList, vertexList.get(0));
+
+        // ------- 单源最长路径 -------
+        TopoSortSolveLongPath tsslp = new TopoSortSolveLongPath();
+        tsslp.execute(vertexList, vertexList.get(0));
     }
+
 }

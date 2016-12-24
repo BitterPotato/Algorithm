@@ -33,13 +33,16 @@ public class DfsWithAbility extends DeepFirstSearch implements DfsSolveTopoSort{
     }
 
     @Override
-    public void topoSort(List<AdjacencyVertex> vertexList) {
+    public Stack<AdjacencyVertex> topoSort(List<AdjacencyVertex> vertexList) {
         this.toPrintTopoSortResult = true;
         topoSortVertexStack = new Stack<AdjacencyVertex>();
 
         this.executeProcess(vertexList);
 
+        Stack<AdjacencyVertex> topoSortVertexStackClone = (Stack<AdjacencyVertex>) topoSortVertexStack.clone();
         printTopoSortResult();
+
+        return topoSortVertexStackClone;
     }
 
     /**

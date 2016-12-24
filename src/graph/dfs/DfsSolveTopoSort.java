@@ -1,9 +1,10 @@
 package graph.dfs;
 
 import java.util.List;
+import java.util.Stack;
 
 import graph.AdjacencyVertex;
 
 public interface DfsSolveTopoSort {
-    public void topoSort(List<AdjacencyVertex> vertexList);
+    public Stack<AdjacencyVertex> topoSort(List<AdjacencyVertex> vertexList);
 }
