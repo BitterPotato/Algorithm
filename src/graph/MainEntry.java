@@ -10,6 +10,7 @@ import graph.bfs.DijkstraDfsWithArray;
 import graph.dfs.DeepFirstSearch;
 import graph.dfs.DfsSolveTopoSort;
 import graph.dfs.DfsWithAbility;
+import greedy.mst.PrimMST;
 
 //test data 1:
 //1,2,3,4,5,6,7
@@ -88,6 +89,11 @@ public class MainEntry {
         // ------- 单源最长路径 -------
         TopoSortSolveLongPath tsslp = new TopoSortSolveLongPath();
         tsslp.execute(vertexList, vertexList.get(0));
+
+        // -------- Prim最小生成树 -------------
+//        System.out.println();
+//        PrimMST pmst = new PrimMST();
+//        dbfs.execute(vertexList, vertexList.get(0));
     }
 
 }
